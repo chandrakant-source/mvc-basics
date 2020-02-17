@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using MVCBasic.Repository.Domain.Cutomers;
 
-namespace MVCBasic.Models
+namespace MVCBasic.Repository.Repository.Customers
 {
     public class CustomerRepository
     {
@@ -39,7 +41,26 @@ namespace MVCBasic.Models
         #region Methods
         public List<Customer> GetAll()
         {
-            return Table;
+            return Table.OrderBy(x => x.Id).ToList();
+        }
+
+
+        public void Update(Customer entity)
+        {
+            var data = this.Table.FirstOrDefault(x => x.Id == entity.Id);
+            data.LastName = entity.LastName;
+            data.FirstName = entity.FirstName;
+            data.Phone = entity.Phone;
+            data.Address = entity.Address;
+            data.EmailAddress = entity.EmailAddress;
+            data.State = entity.State;
+            data.ZipCode = entity.ZipCode;
+        }
+
+
+        public void Add(Customer model)
+        {
+            this.Table.Add(model);
         }
 
         #endregion

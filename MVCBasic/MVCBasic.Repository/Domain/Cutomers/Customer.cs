@@ -1,4 +1,4 @@
-﻿namespace MVCBasic.Models
+﻿namespace MVCBasic.Repository.Domain.Cutomers
 {
     public class Customer
     {

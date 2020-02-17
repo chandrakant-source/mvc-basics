@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVCBasic.Models.Customer>
+﻿@model IEnumerable<MVCBasic.Models.CustomerModel>
 
 @{
     ViewBag.Title = "Index";
@@ -41,7 +41,7 @@
             @Html.DisplayFor(modelItem => item.EmailAddress)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id })
+            @Html.ActionLink("Edit", "Update", new { id=item.Id })
         </td>
     </tr>
 }
