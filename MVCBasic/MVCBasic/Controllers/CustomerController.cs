@@ -38,17 +38,26 @@ namespace MVCBasic.Controllers
         #region Add
 
         [HttpGet]
-        [ActionName("Create")]
         public ActionResult Add()
         {
-            return View("Add", new CustomerModel());
+            var model = new CustomerModel();
+            model.ActionMethod = "ADD";
+            return View("AddUpdate", model);
         }
 
         [HttpPost]
-        [ActionName("Create")]
-        public ActionResult Add(CustomerModel model)
+        public ActionResult Add(FormCollection form)
         {
-            var entity = ToEntity(model);
+            var entity = ToEntity(new CustomerModel
+            {
+                Address = form["Address"],
+                EmailAddress = form["EmailAddress"],
+                FirstName = form["FirstName"],
+                LastName = form["LastName"],
+                Phone = form["Phone"],
+                State = form["State"],
+                ZipCode = form["ZipCode"]
+            });
             _customerRepository.Add(entity);
             return RedirectToRoute("CustomerIndex");
         }
@@ -61,11 +70,14 @@ namespace MVCBasic.Controllers
         public ActionResult Update(int id)
         {
             var entity = _customerRepository.GetAll().FirstOrDefault(x => x.Id == id);
-            return View(ToModel(entity));
+            var model = ToModel(entity);
+            model.ActionMethod = "Update";
+            return View("AddUpdate", model);
         }
 
         [HttpPost]
-        public ActionResult Update(CustomerModel model)
+
+        public ActionResult Update([Bind(Exclude = "ActionMethod")]CustomerModel model)
         {
             var entity = ToEntity(model);
             _customerRepository.Update(entity);

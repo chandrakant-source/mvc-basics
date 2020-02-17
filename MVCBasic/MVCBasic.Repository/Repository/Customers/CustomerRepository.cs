@@ -58,9 +58,11 @@ namespace MVCBasic.Repository.Repository.Customers
         }
 
 
-        public void Add(Customer model)
+        public void Add(Customer entity)
         {
-            this.Table.Add(model);
+            int entityId = this.Table.Max(x => x.Id) + 1;
+            entity.Id = entityId;
+            this.Table.Add(entity);
         }
 
         #endregion
